@@ -1,8 +1,5 @@
 import math
-
-# Dados da questão
-intervalos = [(10, 20), (20, 30), (30, 40), (40, 50)]
-frequencias = [4, 6, 8, 2]
+import matplotlib.pyplot as plt
 
 def calcularModa(intervalos, frequencias):
     maiorFrequencia  = 0
@@ -81,19 +78,21 @@ def calcularPencentil(intervalos, frequencias, percentil):
             break
     return valorPct  
 
-def gerar_grafico(intervalos, frequencias):
+def separaClasses(intervalos):
+    classesSeparadas = []
+    for intervalo in intervalos:
+        classesSeparadas.append(str(intervalo[0]) + " a " + str(intervalo[1]))
+    return classesSeparadas
+
+
+def gerarGrafico(intervalos, frequencias):
     print("\nGráfico de Frequências:")
 
-# Cálculos e resultados
-print("")
-print(f"Intervalos: {intervalos}")
-print(f"Frequências: {frequencias}")
-print(f"Média: {calcularMedia(intervalos, frequencias)}")
-print(f"Moda: {calcularModa(intervalos, frequencias)}")
-print(f"Mediana: {calcularMediana(intervalos, frequencias)}")
-print(f"Desvio Padrão: {calcularDP(intervalos, frequencias)}")
-print(f"Percentil 25: {calcularPencentil(intervalos, frequencias, 25)}")
-print(f"Percentil 50 (Mediana): {calcularPencentil(intervalos, frequencias, 50)}")
-print(f"Percentil 75: {calcularPencentil(intervalos, frequencias, 75)}")
-gerar_grafico(intervalos, frequencias)
+
+    plt.bar(intervalos, frequencias)
+    plt.xlabel('Intervalos')
+    plt.ylabel('Frequencias')
+    plt.title('Gráfico de Barras')
+    plt.show()
+
 
