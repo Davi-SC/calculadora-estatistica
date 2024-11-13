@@ -29,7 +29,6 @@ for dado in dados:
 
 print(f"\nIntervalos: {intervalos}")
 print(f"Frequências: {frequencias}")
-print
 print(f"Média: {funcoes.calcularMedia(intervalos, frequencias)}")
 print(f"Moda: {funcoes.calcularModa(intervalos, frequencias)}")
 print(f"Mediana: {funcoes.calcularMediana(intervalos, frequencias)}")
@@ -41,4 +40,3 @@ print(f"Percentil 15: {funcoes.calcularPencentil(intervalos, frequencias, 15)}")
 print(f"Percentil 90: {funcoes.calcularPencentil(intervalos, frequencias, 90)}")
 intervalosSeparados = funcoes.separaClasses(intervalos)
 funcoes.gerarGrafico(intervalosSeparados, frequencias)
-
