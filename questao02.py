@@ -1,7 +1,9 @@
 import funcoes
+import pandas as pds
 
 dados = [61,65,43,53,55,51,58,55,59,56,52,53,62,49,68,51,50,67,62,64,53,56,48,50,61,44,64,53,54,55,48,54,57,41,54,71,57,53,46,48,55,46,57,54,48,63,49,55,52,51]
 
+# convertendo os dados brutos em dados separados por intervalos e frequencias
 dados.sort()
 intervalos = []
 frequencias = []
@@ -26,17 +28,19 @@ for dado in dados:
             frequencias[i] += 1
             break  
 
+dados_dicionario = funcoes.converterDicionarios(intervalos, frequencias)
 
-print(f"\nIntervalos: {intervalos}")
-print(f"Frequências: {frequencias}")
-print(f"Média: {funcoes.calcularMedia(intervalos, frequencias)}")
+print("\nTabela de distribuicao\n")
+print(pds.DataFrame(dados_dicionario))
+
+print(f"\nMédia: {funcoes.calcularMedia(intervalos, frequencias)}")
 print(f"Moda: {funcoes.calcularModa(intervalos, frequencias)}")
 print(f"Mediana: {funcoes.calcularMediana(intervalos, frequencias)}")
 print(f"Desvio Padrão: {funcoes.calcularDP(intervalos, frequencias)}")
-print(f"Quartil 1: {funcoes.calcularPencentil(intervalos, frequencias, 25)}")
-print(f"Dercil 3 : {funcoes.calcularPencentil(intervalos, frequencias, 30)}")
-print(f"Dercil 7: {funcoes.calcularPencentil(intervalos, frequencias, 70)}")
-print(f"Percentil 15: {funcoes.calcularPencentil(intervalos, frequencias, 15)}")
-print(f"Percentil 90: {funcoes.calcularPencentil(intervalos, frequencias, 90)}")
-intervalosSeparados = funcoes.separaClasses(intervalos)
-funcoes.gerarGrafico(intervalosSeparados, frequencias)
+print(f"Quartil 1: {funcoes.calcularPercentil(intervalos, frequencias, 25)}")
+print(f"Dercil 3 : {funcoes.calcularPercentil(intervalos, frequencias, 30)}")
+print(f"Dercil 7: {funcoes.calcularPercentil(intervalos, frequencias, 70)}")
+print(f"Percentil 15: {funcoes.calcularPercentil(intervalos, frequencias, 15)}")
+print(f"Percentil 90: {funcoes.calcularPercentil(intervalos, frequencias, 90)}")
+
+funcoes.gerarGrafico(funcoes.separaClasses(intervalos), frequencias)

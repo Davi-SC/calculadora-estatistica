@@ -22,7 +22,7 @@ def calcularMediana(intervalos, frequencias):
         freqAcumulada += frequencias[i]
         if freqAcumulada >= totalFreq/2:
             a, b = intervalos[i]
-            mediana = a+b/2
+            mediana = (a+b) / 2
             break
 
     return mediana
@@ -47,36 +47,38 @@ def calcularMedia(intervalos, frequencias):
 
 def calcularDP(intervalos, frequencias):
     media = calcularMedia(intervalos,frequencias)
-    soma = 0 #essa soma vai ser dada pelo somatorio das frequencias vezes (ponto medio - media)elevado a 2
-    somaFreq = 0 #soma das frequencias
+    soma = 0 #essa soma vai ser dada pelo somatorio dos (pontos medio - media)elevado a 2
+    n = len(intervalos) #numero de intervalos
     for i in range(len(intervalos)):
         a, b = intervalos[i]
-        frequencia = frequencias[i]
         ponto_medio = (a + b) / 2
-        soma += frequencia * (ponto_medio - media) ** 2
-        somaFreq += frequencia
+        soma += (ponto_medio - media)** 2
+
     
-    if(somaFreq != 0):
-        variancia = soma/ somaFreq
+    if(n != 1):
+        variancia = soma / (n-1)
     else: variancia = 0
     desvioPadrao = math.sqrt(variancia)
-    return media
+    return desvioPadrao
 
-def calcularPencentil(intervalos, frequencias, percentil):
-    totalFreq = 0
-    for f in frequencias:
-        totalFreq += f
+def calcularPercentil(intervalos, frequencias, percentil):
+    n = sum(frequencias)
+    posicao = percentil * n / 100 
 
-    posicaoPct = (percentil / 100) * totalFreq
-    freqAcumulada = 0
-    valorPct = 0
-    for i in range(len(frequencias)):
-        freqAcumulada += frequencias[i]
-        if freqAcumulada >= posicaoPct:
-            a, b = intervalos[i]
-            valorPct = (a + b) / 2
+    somaFreq = 0
+    for i in range(len(intervalos)):
+        somaFreq += frequencias[i]
+        if somaFreq >= posicao:
+            classe = i #classe do percentil
             break
-    return valorPct  
+    inferior = intervalos[classe][0]
+    amplitude = intervalos[classe][1] - intervalos[classe][0]
+    somaFreqAnterior = somaFreq - frequencias[classe] 
+
+    # Aplicação da fórmula
+    valorpct= inferior + ((posicao - somaFreqAnterior) / frequencias[classe]) * amplitude
+
+    return valorpct  
 
 def separaClasses(intervalos):
     classesSeparadas = []
@@ -85,10 +87,16 @@ def separaClasses(intervalos):
     return classesSeparadas
 
 
+def converterDicionarios(intervalos, frequencias):
+    dados = []
+    for i in range(len(intervalos)):
+        classe = f"{intervalos[i][0]}|-{intervalos[i][1]}"
+        frequencia = str(frequencias[i])
+        dados.append({"Classes": classe, "Frequencia": frequencia})
+    return dados
+
 def gerarGrafico(intervalos, frequencias):
     print("\nGráfico de Frequências:")
-
-
     plt.bar(intervalos, frequencias)
     plt.xlabel('Intervalos')
     plt.ylabel('Frequencias')
